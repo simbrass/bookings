@@ -492,6 +492,15 @@ progress {
   font-weight: 300;
 }
 
+.datepicker {
+  color: #000;
+  z-index: 10000;
+}
+
+.swal2-actions {
+  z-index: revert !important;
+}
+
 .display-1 {
   font-size: calc(1.625rem + 4.5vw);
   font-weight: 300;
@@ -11476,7 +11485,7 @@ footer.footer .social-link:hover {
   height: auto;
   padding-top: 8rem;
   padding-bottom: 8rem;
-  background: linear-gradient(90deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.1) 100%), url("../static/images/background-masthead.jpg");
+  background: linear-gradient(90deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.1) 100%), url("../images/background-masthead.jpg");
   background-position: center center;
   background-repeat: no-repeat;
   background-size: cover;
