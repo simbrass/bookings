@@ -82,7 +82,7 @@ function fadeIn(el, display) {
     })();
 };
 
-
+// Bootstrap form enhanced
 (function () {
     'use strict'
   
@@ -105,7 +105,18 @@ function fadeIn(el, display) {
 
 console.log("Printing javascript...");
 
-document.getElementById("colorButton").addEventListener("click", function(){ 
+
+
+function test() {
+    let button = document.getElementById("check-availability-button")
+    if (!button) {
+        console.log("bouton absent")
+    } else {
+        console.log("bouton présent")
+    }
+} test()
+
+document.getElementById("check-availability-button").addEventListener("click", function(){ 
     html = `     
         <form id="check-availability-form" action="" method="post" class="needs-validation" novalidate>
             <div class="form-row">
@@ -120,13 +131,46 @@ document.getElementById("colorButton").addEventListener("click", function(){
             </div>
         </form>
     `
-    attention.custom({title: "Choose your dates", msg: html})
+    
+    attention.custom({
+        title: "Choose your dates", 
+        msg: html, 
+
+        willOpen: () => {
+            const elem = document.getElementById('reservation-dates-modal');
+            const rangepicker = new DateRangePicker(elem, {
+              format: "yyyy-mm-dd",
+            }); 
+        },
+
+        didOpen: () => {
+            document.getElementById("start-modal").removeAttribute("disabled");
+            document.getElementById("end-modal").removeAttribute("disabled");
+        },
+
+        callback: function(result) {
+            console.log("called")
+
+            let form = document.getElementById("check-availability-form")
+            let formData = new FormData(form)
+            let tkn = document.querySelector("meta[name='csrf-token']").content
+            formData.append("csrf_token", tkn)
+
+            fetch("/search-availability-json", {
+                method: "post",
+                body: formData,
+            })
+                .then(response => response.json())
+                .then(data => {
+                    console.log(data)
+                    console.log(data.ok)
+                    console.log(data.message)
+                })
+        }
+    })
 })
 
-const elem = document.getElementById('reservation-dates');
-const rangepicker = new DateRangePicker(elem, {
-  format: "yyyy-mm-dd",
-}); 
+
 
 function notify(msgType, msgText) {
     notie.alert({
@@ -205,16 +249,15 @@ function Prompt() {
             msg = "",
         } = c;
 
-        const { value: formValues } = await Swal.fire({
+        const { value: result } = await Swal.fire({
             title: title,
             html: msg,
             focusConfirm: false,
             showCancelButton: true,
             willOpen: () => {
-                const elem = document.getElementById('reservation-dates-modal');
-                const rangepicker = new DateRangePicker(elem, {
-                  format: "yyyy-mm-dd",
-                }); 
+                if (c.willOpen !== undefined) {
+                    c.willOpen()
+                }
             },
             preConfirm: () => {
               return [
@@ -223,13 +266,24 @@ function Prompt() {
               ]
             },
             didOpen: () => {
-                document.getElementById("start-modal").removeAttribute("disabled");
-                document.getElementById("end-modal").removeAttribute("disabled");
+                if (c.didOpen !== undefined) {
+                    c.didOpen()
+                }
             }
         })
           
-          if (formValues) {
-            Swal.fire(JSON.stringify(formValues))
+        if (result) {
+            if (result.dismiss !== Swal.DismissReason.cancel) {
+                if (result.value !== "") {
+                    if (c.callback !== undefined) {
+                        c.callback(result)
+                    } else {
+                        c.callback(false)
+                    }
+                }
+            } else {
+                c.callback(false)
+            }
           }
     }
 

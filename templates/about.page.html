@@ -1,24 +1,108 @@
 {{template "base" .}}
 
 {{define "content"}}
-    <div class="container">
-        <div class="row">
-            <div class="col">
-                <h1>This is the About page</h1>
-                <p>Avec cache?</p>
-                <p>Avec cache?</p>
-                <p>Avec cache?</p>
-                <p>Avec cache?</p>
-                <p>Avec cache?</p>
-                <p>This came from the template: {{index .StringMap "test"}}</p>
-                <p>
-                    {{if ne (index .StringMap "remote_ip") ""}}
-                        Your remote IP address is {{index .StringMap "remote_ip"}}
-                    {{else}}
-                        I don't know your IP address yet. Visit the <a href="/">home page</a> so I can get it.
-                    {{end}}
-                </p>
+    <!-- Header-->
+    <header class="masthead d-flex align-items-center">
+        <div class="container px-4 px-lg-5 text-center">
+            <h1 class="mb-1">General's Quarter</h1>
+            <h3 class="mb-5"><em>When you want to party like an animal</em></h3>
+            <a class="btn btn-primary btn-xl" href="make-reservation-gq.html">Check Availability</a>
+        </div>
+    </header>
+    <!-- Services-->
+    <section class="content-section bg-primary text-white text-center" id="services">
+        <div class="container px-4 px-lg-5">
+            <div class="content-section-heading">
+                <h3 class="text-secondary mb-0">Services</h3>
+                <h2 class="mb-5">What We Offer With That Room</h2>
+            </div>
+            <div class="row gx-4 gx-lg-5">
+                <div class="col-lg-3 col-md-6 mb-5 mb-lg-0">
+                    <span class="service-icon rounded-circle mx-auto mb-3"><i class="icon-screen-smartphone"></i></span>
+                    <h4><strong>Champagne</strong></h4>
+                    <p class="text-faded mb-0">Unlimited Armand de Brignac.</p>
+                </div>
+                <div class="col-lg-3 col-md-6 mb-5 mb-lg-0">
+                    <span class="service-icon rounded-circle mx-auto mb-3"><i class="icon-pencil"></i></span>
+                    <h4><strong>Bananas</strong></h4>
+                    <p class="text-faded mb-0">Directly from the jungle.</p>
+                </div>
+                <div class="col-lg-3 col-md-6 mb-5 mb-md-0">
+                    <span class="service-icon rounded-circle mx-auto mb-3"><i class="icon-like"></i></span>
+                    <h4><strong>Music</strong></h4>
+                    <p class="text-faded mb-0">
+                        DJ Snake
+                        <i class="fas fa-heart"></i>
+                    </p>
+                </div>
+                <div class="col-lg-3 col-md-6">
+                    <span class="service-icon rounded-circle mx-auto mb-3"><i class="icon-mustache"></i></span>
+                    <h4><strong>Mud</strong></h4>
+                    <p class="text-faded mb-0">Good for your skin...</p>
+                </div>
             </div>
         </div>
-    </div>
+    </section>
+    <!-- Portfolio-->
+    <section class="content-section" id="portfolio">
+        <div class="container px-4 px-lg-5">
+            <div class="content-section-heading text-center">
+                <h3 class="text-secondary mb-0">Memories</h3>
+                <h2 class="mb-5">Recent Partys</h2>
+            </div>
+            <div class="row gx-0">
+                <div class="col-lg-6">
+                    <a class="portfolio-item" href="/">
+                        <div class="caption">
+                            <div class="caption-content">
+                                <div class="h2">Stationary</div>
+                                <p class="mb-0">A yellow pencil with envelopes on a clean, blue backdrop!</p>
+                            </div>
+                        </div>
+                        <img class="img-fluid" src="/static/assets/img/portfolio-1.jpg" alt="..." />
+                    </a>
+                </div>
+                <div class="col-lg-6">
+                    <a class="portfolio-item" href="/">
+                        <div class="caption">
+                            <div class="caption-content">
+                                <div class="h2">Ice Cream</div>
+                                <p class="mb-0">A dark blue background with a colored pencil, a clip, and a tiny ice cream cone!</p>
+                            </div>
+                        </div>
+                        <img class="img-fluid" src="/static/assets/img/portfolio-2.jpg" alt="..." />
+                    </a>
+                </div>
+                <div class="col-lg-6">
+                    <a class="portfolio-item" href="/">
+                        <div class="caption">
+                            <div class="caption-content">
+                                <div class="h2">Strawberries</div>
+                                <p class="mb-0">Strawberries are such a tasty snack, especially with a little sugar on top!</p>
+                            </div>
+                        </div>
+                        <img class="img-fluid" src="/static/assets/img/portfolio-3.jpg" alt="..." />
+                    </a>
+                </div>
+                <div class="col-lg-6">
+                    <a class="portfolio-item" href="/">
+                        <div class="caption">
+                            <div class="caption-content">
+                                <div class="h2">Workspace</div>
+                                <p class="mb-0">A yellow workspace with some scissors, pencils, and other objects.</p>
+                            </div>
+                        </div>
+                        <img class="img-fluid" src="/static/assets/img/portfolio-4.jpg" alt="..." />
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Call to Action-->
+    <section class="content-section bg-primary text-white">
+        <div class="container px-4 px-lg-5 text-center">
+            <h2 class="mb-4">The buttons below are impossible to resist...</h2>
+            <a class="btn btn-xl btn-light me-4" href="/search-availability">Just Book Now...</a>
+        </div>
+    </section>
 {{end}}

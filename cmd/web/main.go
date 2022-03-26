@@ -7,9 +7,9 @@ import (
 	"time"
 
 	"github.com/alexedwards/scs/v2"
-	"github.com/simbrass/bookings/pkg/config"
-	"github.com/simbrass/bookings/pkg/handlers"
-	"github.com/simbrass/bookings/pkg/render"
+	"github.com/simbrass/bookings/internal/config"
+	"github.com/simbrass/bookings/internal/handlers"
+	"github.com/simbrass/bookings/internal/render"
 )
 
 const portNumber = ":8080"
