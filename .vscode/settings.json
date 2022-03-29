@@ -1,0 +1,4 @@
+"files.associations": {
+    "*.tmpl": "html",
+    "*.gohtml": "html"
+},
