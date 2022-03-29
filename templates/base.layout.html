@@ -44,7 +44,7 @@
 
 
         
-    <!-- Footer-->
+        <!-- Footer-->
         <footer class="footer text-center">
             <div class="container px-4 px-lg-5">
                 <ul class="list-inline mb-5">
@@ -74,7 +74,24 @@
         <!-- Core theme JS-->
         <script src="/static/js/scripts.js"></script>
         {{block "js" .}}
+        {{end}}
         
+        {{with.Error}}
+        <script>
+            notify("error", "{{.}}");
+        </script>
+        {{end}}
+
+        {{with.Flash}}
+        <script>
+            notify("success", "{{.}}");
+        </script>
+        {{end}}
+
+        {{with .Warning}}
+        <script>
+            notify("warning", "{{.}}");
+        </script>
         {{end}}
     </body>
 </html>

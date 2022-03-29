@@ -6,6 +6,7 @@
 
 let attention = Prompt()
 
+// Functions related to the theme
 window.addEventListener('DOMContentLoaded', event => {
 
     const sidebarWrapper = document.getElementById('sidebar-wrapper');
@@ -59,6 +60,7 @@ window.addEventListener('DOMContentLoaded', event => {
     })
 })
 
+// Function related to the theme
 function fadeOut(el) {
     el.style.opacity = 1;
     (function fade() {
@@ -70,6 +72,7 @@ function fadeOut(el) {
     })();
 };
 
+// Functions related to the theme
 function fadeIn(el, display) {
     el.style.opacity = 0;
     el.style.display = display || "block";
@@ -116,59 +119,118 @@ function test() {
     }
 } test()
 
-document.getElementById("check-availability-button").addEventListener("click", function(){ 
-    html = `     
-        <form id="check-availability-form" action="" method="post" class="needs-validation" novalidate>
-            <div class="form-row">
-                <div id="reservation-dates-modal" class="form-row">
-                    <div class="col">
-                        <input disabled required autocomplete="off" type="text" class="swal2-input" id="start-modal" name="start-modal" placeholder="Arrival">
+function checkAvailabilityButton() {
+    let button = document.getElementById("check-availability-button")
+    if (button) {
+        button.addEventListener("click", function(){ 
+            html = `     
+                <form id="check-availability-form" action="" method="post" class="needs-validation" novalidate>
+                    <div class="form-row">
+                        <div id="reservation-dates-modal" class="form-row">
+                            <div class="col">
+                                <input disabled required autocomplete="off" type="text" class="swal2-input" id="start-modal" name="start-modal" placeholder="Arrival">
+                            </div>
+                            <div class="col">
+                                <input disabled required autocomplete="off" type="text" class="swal2-input" id="end-modal" name="end-modal" placeholder="Departure">
+                            </div>
+                        </div>
                     </div>
-                    <div class="col">
-                        <input disabled required autocomplete="off" type="text" class="swal2-input" id="end-modal" name="end-modal" placeholder="Departure">
-                    </div>
-                </div>
-            </div>
-        </form>
-    `
-    
-    attention.custom({
-        title: "Choose your dates", 
-        msg: html, 
-
-        willOpen: () => {
-            const elem = document.getElementById('reservation-dates-modal');
-            const rangepicker = new DateRangePicker(elem, {
-              format: "yyyy-mm-dd",
-            }); 
-        },
-
-        didOpen: () => {
-            document.getElementById("start-modal").removeAttribute("disabled");
-            document.getElementById("end-modal").removeAttribute("disabled");
-        },
-
-        callback: function(result) {
-            console.log("called")
-
-            let form = document.getElementById("check-availability-form")
-            let formData = new FormData(form)
-            let tkn = document.querySelector("meta[name='csrf-token']").content
-            formData.append("csrf_token", tkn)
-
-            fetch("/search-availability-json", {
-                method: "post",
-                body: formData,
+                </form>
+            `
+            
+            attention.custom({
+                title: "Choose your dates", 
+                msg: html, 
+        
+                willOpen: () => {
+                    const elem = document.getElementById('reservation-dates-modal');
+                    const rangepicker = new DateRangePicker(elem, {
+                      format: "yyyy-mm-dd",
+                    }); 
+                },
+        
+                didOpen: () => {
+                    document.getElementById("start-modal").removeAttribute("disabled");
+                    document.getElementById("end-modal").removeAttribute("disabled");
+                },
+        
+                callback: function(result) {
+                    console.log("called")
+        
+                    let form = document.getElementById("check-availability-form")
+                    let formData = new FormData(form)
+                    let tkn = document.querySelector("meta[name='csrf-token']").content
+                    formData.append("csrf_token", tkn)
+        
+                    fetch("/search-availability-json", {
+                        method: "post",
+                        body: formData,
+                    })
+                        .then(response => response.json())
+                        .then(data => {
+                            console.log(data)
+                            console.log(data.ok)
+                            console.log(data.message)
+                        })
+                }
             })
-                .then(response => response.json())
-                .then(data => {
-                    console.log(data)
-                    console.log(data.ok)
-                    console.log(data.message)
-                })
-        }
-    })
-})
+        })
+    }
+} checkAvailabilityButton()
+
+// document.getElementById("check-availability-button").addEventListener("click", function(){ 
+//     html = `     
+//         <form id="check-availability-form" action="" method="post" class="needs-validation" novalidate>
+//             <div class="form-row">
+//                 <div id="reservation-dates-modal" class="form-row">
+//                     <div class="col">
+//                         <input disabled required autocomplete="off" type="text" class="swal2-input" id="start-modal" name="start-modal" placeholder="Arrival">
+//                     </div>
+//                     <div class="col">
+//                         <input disabled required autocomplete="off" type="text" class="swal2-input" id="end-modal" name="end-modal" placeholder="Departure">
+//                     </div>
+//                 </div>
+//             </div>
+//         </form>
+//     `
+    
+//     attention.custom({
+//         title: "Choose your dates", 
+//         msg: html, 
+
+//         willOpen: () => {
+//             const elem = document.getElementById('reservation-dates-modal');
+//             const rangepicker = new DateRangePicker(elem, {
+//               format: "yyyy-mm-dd",
+//             }); 
+//         },
+
+//         didOpen: () => {
+//             document.getElementById("start-modal").removeAttribute("disabled");
+//             document.getElementById("end-modal").removeAttribute("disabled");
+//         },
+
+//         callback: function(result) {
+//             console.log("called")
+
+//             let form = document.getElementById("check-availability-form")
+//             let formData = new FormData(form)
+//             let tkn = document.querySelector("meta[name='csrf-token']").content
+//             formData.append("csrf_token", tkn)
+
+//             fetch("/search-availability-json", {
+//                 method: "post",
+//                 body: formData,
+//             })
+//                 .then(response => response.json())
+//                 .then(data => {
+//                     console.log(data)
+//                     console.log(data.ok)
+//                     console.log(data.message)
+//                 })
+//         }
+//     })
+// })
 
 
 
@@ -179,6 +241,7 @@ function notify(msgType, msgText) {
     })
 }
 
+
 function notifyModal(title, text, icon, confirmButtonText) {
     Swal.fire({
         title: title,
@@ -187,6 +250,8 @@ function notifyModal(title, text, icon, confirmButtonText) {
         confirmButtonText: confirmButtonText
     })
 }
+
+
 
 function Prompt() {
     let toast = function(c) {
